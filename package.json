@@ -14,7 +14,7 @@
 		"mongoose": "^8.1.3"
 	},
 	"repository": {
-		"url": "https://github.com/freeCodeCamp/boilerplate-project-exercisetracker"
+		"url": "https://github.com/kvncampos/ExerciseTracker_MicroService"
 	},
 	"license": "MIT",
 	"keywords": [
