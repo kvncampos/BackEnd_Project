@@ -46,14 +46,20 @@ router.post('/api/users', async (req, res) => {
 
 
 // ************************************************************************************************************************************************************
+// GET ALL USERS
+router.get('/api/users/', async (req, res) => {
+    try {
+        let users = await exerciseModel.find({}, { _id: 1, username: 1 , __v: 1})
 
-function filterLogsByDate(document, fromDate, toDate) {
-    return document.log.filter(log => {
-        const logDate = new Date(log.date);
-        return logDate >= fromDate && logDate <= toDate;
-    });
-}
+        return res.json(users)
+    }
+    catch(err) {
+        res.status(500).json({error: "Internal Error"})
+    }
+});
 
+
+// ************************************************************************************************************************************************************
 
 // GET LOGS FOR USER
 router.get('/api/users/:_id/logs', async (req, res) => {
@@ -79,69 +85,21 @@ router.get('/api/users/:_id/logs', async (req, res) => {
         let logs = filteredExercise.map(item => ({
             description: item.description,
             duration: item.duration,
-            date: item.date
+            date: item.date.toDateString()
         }));
 
         res.json({
+            _id: exist_url._id,
             username: exist_url.user,
             count: filteredExercise.length,
-            _id: exist_url._id,
             log: logs
         });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ 'HTTP/500': 'Internal Server Error' });
     }
 });
-
-
-
-
-    /*
-    // Check for Valid ObjectId for Mongoose
-    if (!mongoose.Types.ObjectId.isValid(req.params._id)) {
-        return res.json({"HTTP/400": `Invalid ID: ${req.params._id}`})
-    }
-
-    let id = new mongoose.Types.ObjectId(req.params._id)
-    let from = req.query.from 
-    let to = req.query.to
-    let limit = Number(req.query.limit) || 50
-
-
-    let current_date = new Date()
-    let humandate;
-
-    if (!from && !to) {
-        from = new Date('1900')
-        to = current_date
-        console.log('DateFields "FROM/TO Empty. Using Default.')
-
-    }
-    else if (!from && to) {
-        from = new Date('1900')
-        to = new Date(to)
-        console.log('DateField "FROM" Empty. Using Default.')
-    }
-    else if (from && !to) {
-        from = new Date(from)
-        to = current_date
-        console.log('DateField "TO" Empty. Using Default.')
-    }
-    
-    try{
-        console.log(id, 'From= ', from.toDateString(), '-->', 'To= ', to.toDateString(), "Limit= ", limit)
-
-        // exist_url = await exerciseModel.findOne({"_id": id}, { "log._id": 0 }).select('-__v').sort({ "date": 1 })
-    }
-    catch(err){
-        return res.json({"HTTP/400": `No Logs for ${id} found in database.`})
-    }
-
-});
-*/
-
-
 
 
 
