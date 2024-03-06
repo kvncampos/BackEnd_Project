@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <title>URL Shortener Microservice | freeCodeCamp.org</title>
+
+    <link rel="icon" type="image/png"href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png"/>
+    <link href="/public/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+<header>
+
+<div
+  class="bg-image"
+  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp'); height: 100vh;">
+
+  <div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+      <div class="container">
+
+        <div class="masthead clearfix">
+          <div class="container inner">
+            <h3 class="masthead-brand">URL Shortener Microservice</h3>
+            <nav>
+              <ul class="nav masthead-nav">
+                <li class="active"><a href='/api/shorturl/all' action="/api/shorturl/all" method="GET">GET: DATA</a></li>
+                <li><a href="/">Home Page</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div class="inner cover">
+          <!-- <h1 class="cover-heading">URL Shortener Microservice</h1> -->
+          <div class=".container">
+            <form action="api/shorturl" method="POST">
+              <fieldset style="margin-top: 20px;">
+                <legend>Enter URL To Get Shortcode!</legend>
+                <label for="url_input">URL:</label>
+                <input id="url_input" type="text" name="url" placeholder="https://www.freecodecamp.org/" style="width: 240px;"> <!--Add Below Pattern-->
+                <!-- pattern="https://www.*" -->
+                <input class="btn btn-primary" type="submit" value="POST URL" />
+              </fieldset>
+            </form>
+            <p class="info" style="margin-top: 20px;">Enter a Valid URL to Store and Receive a Shortcut Endpoint.</p>
+            <p class="info">Example: https://www.google.com</p>
+          </div>
+          <p>By <a class="btn btn-outline-light" href="https://www.freecodecamp.org/">freeCodeCamp</a></p>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</header>
+</html>
+
+
+

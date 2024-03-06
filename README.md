@@ -1,132 +1,51 @@
-# ExerciseTracker_MicroService
+# BackEnd MicroServices
+This project consists of a set of microservices built using Node.js and Express.js. Below is an overview of the project structure and functionality of each microservice:
 
-This repository contains an API for a fitness tracker application. It provides endpoints to manage users and their exercise logs.
+## Project Structure
+The project consists of the following files and directories:
 
-## Installation and Install Dependencies
-```bash
-git clone <repository_url>
+- DB: Contains database-related files.
+- uploads: Directory for file uploads.
+- views: Contains HTML files for the microservice landing pages.
+- index.js: Entry point for the application.
+- .env: Configuration file for environment variables.
+- README.md: This file.
 
-npm install
-```
+## Microservices Overview
 
-## Setup ENV Variables
-- ENV=PROD (Disabled all Console Logs)
+1. Timestamp Microservice
+Routes:
+/timestamp: HTML router.
+/timestamp/api/: API endpoints for timestamp functionality.
+/timestamp/api/: Returns current UTC and UNIX timestamp.
+/timestamp/api/:date: Returns UTC and UNIX timestamp for the provided date.
+2. Request Header Parser Microservice
+Routes:
+/requestHeaderParser/api/whoami: Returns IP address, user agent (software), and preferred language.
+3. URL Shortener Microservice
+Routes:
+/urlShortenerMicroservice: HTML router.
+/api/shorturl/all: Get all short URLs stored in the database.
+/api/shorturl: POST endpoint to shorten a URL.
+/api/shorturl/:code: GET endpoint to redirect to the original URL using the short code.
+/api/shorturl/:shortcode: PUT and DELETE endpoints to update or delete a short URL.
+4. Exercise Tracker Microservice
+Routes:
+/exerciseTrackerMicroservice: HTML router.
+/exerciseTrackerMicroservice/api/users: GET all users or CREATE a new user.
+/exerciseTrackerMicroservice/api/users/:_id/logs: GET logs for a specific user.
+/exerciseTrackerMicroservice/api/users/:_id/exercises: POST a new exercise for a user.
+/exerciseTrackerMicroservice/api/users/:_id/delete: DELETE a user.
+5. File Metadata Microservice
+Routes:
+/fileMetadataMicroservice: HTML router.
+/fileMetadataMicroservice/api/fileanalyse: POST endpoint to upload a file and retrieve metadata.
+Setting Up the Project
+Install dependencies: Run npm install.
+Configure environment variables: Create a .env file and set up necessary variables.
+Start the server: Run npm start.
 
-## Usage
-```bash
-npm start
-```
-
-## Endpoints
-
-1. Create New User
-
-    URL: /api/users
-
-    Method: POST
-
-    Description: Creates a new user in the system.
-
-    Request Body:
-    ```bash
-        {
-        "username": "example_user"
-        }
-    ```
-    Response:
-    ```bash
-        {
-        "username": "example_user",
-        "_id": "65d6c82ea2696c3e0fd50097"
-        }
-    ```
-
-2. Get User's Exercise Logs
-
-    URL: /api/users/:_id/logs
-
-    Method: GET
-
-    Description: Retrieves exercise logs for the specified user.
-
-    Parameters:
-        _id: User ID
-        from: Start date for filtering (optional)
-        to: End date for filtering (optional)
-        limit: Limit the number of logs (optional)
-
-    Response:
-    ```bash
-        {
-        "username": "example_user",
-        "count": 3,
-        "_id": "65d6c82ea2696c3e0fd50097",
-        "log": [
-            {
-            "description": "test1",
-            "duration": 10,
-            "date": "Sat Jan 01 2000 00:00:00 GMT-0600 (Central Standard Time)"
-            },
-            {
-            "description": "test2",
-            "duration": 20,
-            "date": "Sun Aug 15 2010 00:00:00 GMT-0500 (Central Daylight Time)"
-            },
-            {
-            "description": "test3",
-            "duration": 30,
-            "date": "Fri Apr 10 2020 00:00:00 GMT-0500 (Central Daylight Time)"
-            }
-        ]
-        }
-    ```
-3. Post New Exercise
-
-    URL: /api/users/:_id/exercises
-
-    Method: POST
-
-    Description: Adds a new exercise log for the specified user.
-
-    Parameters:
-        _id: User ID
-
-    Request Body:
-    ```bash
-        {
-        "description": "Running",
-        "duration": 30,
-        "date": "2023-10-01"
-        }
-    ```
-    Response:
-    ```bash
-        {
-        "_id": "65d6c82ea2696c3e0fd50097",
-        "username": "example_user",
-        "date": "Fri Oct 01 2023",
-        "duration": 30,
-        "description": "Running"
-        }
-    ```
-
-4. Delete User
-
-    URL: /api/users/:_id/delete
-
-    Method: DELETE
-
-    Description: Deletes the specified user.
-
-    Parameters:
-        _id: User ID
-
-    Response:
-    ```bash
-        {
-        "HTTP/200": "Deletion Successful for 65d6c82ea2696c3e0fd50097"
-        }
-    ```
-License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Notes
+- The project utilizes Express.js for routing and middleware handling.
+- Multer is used for file uploads in the File Metadata Microservice.
+- MongoDB is used as the database for storing short URLs and exercise tracker data.
