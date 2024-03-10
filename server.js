@@ -170,9 +170,9 @@ app.post('/exerciseTrackerMicroservice/api/users', async (req, res) => {
 
 
 // --------------------- GET: ALL USERS ---------------------
-app.get('/exerciseTrackerMicroservice/api/users/', async (req, res) => {
+app.get('/exerciseTrackerMicroservice/api/users', async (req, res) => {
   try {
-      let users = await exerciseModel.find({}, { _id: 1, username: 1 , __v: 1})
+      let users = await exerciseModel.find({}, { _id: 1, username: 1 })
 
       return res.json(users)
   }
@@ -392,7 +392,7 @@ app.post('/api/shorturl', async (req, res) => {
 
 // ----------------------------------------------------------------------------------------------------------------------------------
 // Get all users
-app.get('/api/shorturl/:code', async (req, res) => {
+app.get('/urlShortenerMicroservice/api/shorturl/:code', async (req, res) => {
   let id = req.params['code'] 
   try {
     const exist_url = await shortUrlModel.findOne({"short_url": id});
@@ -465,8 +465,37 @@ async function deleteexerciseModel() {
   }
 }
 
-// Call deleteAllDocuments every 60 seconds
-setInterval(deleteexerciseModel, 60000); // 60 seconds = 60000 milliseconds
+
+// Function to delete all documents from the collection
+async function deleteCounter() {
+  try {
+    await Counter.deleteMany({});
+    console.log('Success: Deleted all documents from the Counter collection.');
+  } catch (error) {
+    console.error('Error: Failed to delete documents from the Counter collection.');
+    console.error(error);
+  }
+}
+
+// Function to delete all documents from the collection
+async function delecteshortUrlModel() {
+  try {
+    await shortUrlModel.deleteMany({});
+    console.log('Success: Deleted all documents from the shortUrlModel collection.');
+  } catch (error) {
+    console.error('Error: Failed to delete documents from the shortUrlModel collection.');
+    console.error(error);
+  }
+}
+
+// Call deleteCounter every 5 minutes
+setInterval(deleteCounter, 300000); // 2 minutes = 120000 milliseconds
+
+// Call delecteshortUrlModel every 5 minutes
+setInterval(delecteshortUrlModel, 300000); // 2 minutes = 120000 milliseconds
+
+// Call deleteAllDocuments every 2 minutes
+setInterval(deleteexerciseModel, 120000); // 2 minutes = 120000 milliseconds
 
 // *********************************** UTILITIES FOR SERVER ***********************************
 var morgan = require('morgan')
@@ -479,10 +508,8 @@ var morgan = require('morgan')
 app.use(morgan(process.env.ENVIRONMENT))
 
 
-
 // Schedule deletion and recreation every 60 seconds
 setInterval(deleteAndRecreateUploadFolder, 60000); // 60 seconds = 60,000 milliseconds
-
 
 
 // *********************************** APP SETUP ***********************************
